@@ -1,19 +1,19 @@
-# Smart Resume Analyzer
+# Smart Resume Analyzer (Live App)
 
-An AI-based web app that analyzes resumes and compares them with job descriptions.
+🔗 Live Demo: [Add your link here after deployment]
 
 ## Features
-- Resume parsing (PDF)
-- Job description matching
-- Match score using NLP
-- Missing skills suggestion
+- Upload PDF resume
+- Compare with job description
+- Get match score
+- Identify missing skills
 
 ## Tech Stack
 - Python
-- Flask
-- Scikit-learn (TF-IDF + Cosine Similarity)
+- Streamlit
+- Scikit-learn (TF-IDF)
 
 ## Run Locally
 ```bash
 pip install -r requirements.txt
-python app.py
+streamlit run app.py
