@@ -1,24 +1,24 @@
-from flask import Flask, render_template, request
+import streamlit as st
 from utils import extract_text
 from model import analyze_resume
 
-app = Flask(__name__)
+st.set_page_config(page_title="Resume Analyzer", layout="centered")
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+st.title("📄 Smart Resume Analyzer")
+st.write("Upload your resume and compare it with a job description")
 
-@app.route('/analyze', methods=['POST'])
-def analyze():
-    file = request.files['resume']
-    job_desc = request.form['job_desc']
+uploaded_file = st.file_uploader("Upload Resume (PDF)", type=["pdf"])
+job_desc = st.text_area("Paste Job Description")
 
-    resume_text = extract_text(file)
-    score, missing_skills = analyze_resume(resume_text, job_desc)
+if st.button("Analyze"):
+    if uploaded_file and job_desc:
+        resume_text = extract_text(uploaded_file)
+        score, missing_skills = analyze_resume(resume_text, job_desc)
 
-    return render_template('index.html',
-                           score=score,
-                           missing_skills=missing_skills)
+        st.subheader(f"📊 Match Score: {score}%")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+        st.subheader("❌ Missing Skills:")
+        for skill in missing_skills:
+            st.write(f"- {skill}")
+    else:
+        st.warning("Please upload resume and enter job description")
